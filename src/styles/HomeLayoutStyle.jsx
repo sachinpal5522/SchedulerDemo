@@ -12,5 +12,7 @@ export default styled.main`
   section.right-section {
     width: calc(100% - var(--var-menu-left-menu-width));
     background: var(--right-child-background-color);
+    height: 100vh;
+    overflow: auto;
   }
 `;
