@@ -1,6 +1,6 @@
 import AddAppointmentSidebarStyle from "../styles/AddAppointmentSidebarStyle";
 import { useSelector, useDispatch } from "react-redux";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSpinner } from "react-icons/fa";
 import {
   closeAddSidebar,
   addAppointment,
@@ -8,7 +8,9 @@ import {
 
 const AddAppointmetSidebar = () => {
   const dispatch = useDispatch();
-  const { addNewSidebarOpen } = useSelector((state) => state.appointments);
+  const { addNewSidebarOpen, addAppointmentLoader } = useSelector(
+    (state) => state.appointments
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +45,16 @@ const AddAppointmetSidebar = () => {
               <input type="text" placeholder="Full Name" name="fullname" />
               <input type="text" placeholder="Purpose" name="procedure" />
               <input type="datetime-local" name="datetime" />
-              <button type="submit">Add</button>
+              <div>
+                <input type="checkbox" name="ismember" />
+                <label>Is Member</label>
+              </div>
+              <button type="submit" disabled={addAppointmentLoader}>
+                {addAppointmentLoader ? (
+                  <FaSpinner className="loading-icon" />
+                ) : null}
+                Add
+              </button>
             </form>
           </div>
         </AddAppointmentSidebarStyle>

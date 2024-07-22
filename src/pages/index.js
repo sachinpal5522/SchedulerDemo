@@ -4,3 +4,4 @@ export { default as HomeLayout } from "./HomeLayout";
 export { default as Error } from "./Error";
 export { default as Welcome } from "./Welcome";
 export { default as Menu } from "./Menu";
+export { default as Loading } from "./Loading";

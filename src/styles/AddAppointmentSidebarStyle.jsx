@@ -39,6 +39,20 @@ export default styled.section`
         padding: 0.5rem;
         border-radius: 0.2rem;
       }
+
+      .loading-icon {
+        animation: animate 2s infinite;
+        margin-right: 0.5rem;
+      }
+
+      @keyframes animate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(720deg);
+        }
+      }
     }
   }
 `;
