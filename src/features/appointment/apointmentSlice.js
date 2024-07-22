@@ -72,9 +72,14 @@ const appointmentSlice = createSlice({
         state.addAppointmentLoader = false;
         alert("unable to add the appointment");
       })
-      .addCase(AppointmentUpdated.pending, (state) => {})
-      .addCase(AppointmentUpdated.fulfilled, (state, action) => {})
+      .addCase(AppointmentUpdated.pending, (state) => {
+        state.isPageLoading = true;
+      })
+      .addCase(AppointmentUpdated.fulfilled, (state, action) => {
+        state.isPageLoading = false;
+      })
       .addCase(AppointmentUpdated.rejected, (state, action) => {
+        state.isPageLoading = false;
         alert("unable to update appointments");
       })
       .addCase(deleteAppointment.pending, (state) => {
