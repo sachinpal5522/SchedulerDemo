@@ -1,12 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { customPut, customPatch, customDelete } from "../../utils";
+import { customPut, customPatch, customDelete, customFetch } from "../../utils";
 
+export const getAppointments = createAsyncThunk(
+  "appointments/getAppointments",
+  async () => {
+    const url = "/appointments";
+    return customFetch(url);
+  }
+);
 export const addAppointment = createAsyncThunk(
   "appointments/addAppointment",
   async (data) => {
     const { fullname, datetime, procedure, ismember } = data;
     let newAppointment = {
-      id: new Date().valueOf(),
       title: fullname,
       start: datetime,
       end: "",
@@ -14,7 +20,7 @@ export const addAppointment = createAsyncThunk(
         procedure: procedure,
         isMember: ismember == "on",
       },
-      allday: false,
+      allDay: false,
     };
     return customPut("/addAppointment", newAppointment);
   }
@@ -38,6 +44,7 @@ const initialState = {
   schedules: [],
   addNewSidebarOpen: false,
   addAppointmentLoader: false,
+  isPageLoading: false,
 };
 
 const appointmentSlice = createSlice({
@@ -59,6 +66,7 @@ const appointmentSlice = createSlice({
       .addCase(addAppointment.fulfilled, (state, action) => {
         state.addAppointmentLoader = false;
         state.addNewSidebarOpen = false;
+        state.schedules.push(action.payload);
       })
       .addCase(addAppointment.rejected, (state, action) => {
         state.addAppointmentLoader = false;
@@ -66,10 +74,34 @@ const appointmentSlice = createSlice({
       })
       .addCase(AppointmentUpdated.pending, (state) => {})
       .addCase(AppointmentUpdated.fulfilled, (state, action) => {})
-      .addCase(AppointmentUpdated.rejected, (state, action) => {})
-      .addCase(deleteAppointment.pending, (state) => {})
-      .addCase(deleteAppointment.fulfilled, (state, action) => {})
-      .addCase(deleteAppointment.rejected, (state, action) => {});
+      .addCase(AppointmentUpdated.rejected, (state, action) => {
+        alert("unable to update appointments");
+      })
+      .addCase(deleteAppointment.pending, (state) => {
+        state.isPageLoading = true;
+      })
+      .addCase(deleteAppointment.fulfilled, (state, action) => {
+        state.isPageLoading = false;
+        const { id } = action.payload;
+        state.schedules = state.schedules.filter((obj) => {
+          return obj.id != id;
+        });
+      })
+      .addCase(deleteAppointment.rejected, (state, action) => {
+        state.isPageLoading = false;
+        alert("unable to delete appointments");
+      })
+      .addCase(getAppointments.pending, (state) => {
+        state.isPageLoading = true;
+      })
+      .addCase(getAppointments.fulfilled, (state, action) => {
+        state.isPageLoading = false;
+        state.schedules = action.payload;
+      })
+      .addCase(getAppointments.rejected, (state, action) => {
+        state.isPageLoading = false;
+        alert("unable to fetch appointments");
+      });
   },
 });
 

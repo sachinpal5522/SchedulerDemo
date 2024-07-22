@@ -49,3 +49,28 @@ export const customDelete = async (url, data) => {
   }
   return response.json();
 };
+
+export const getBorderColor = (procedure) => {
+  let value = "";
+  switch (procedure.toLocaleLowerCase()) {
+    case "bleaching":
+      value = "purple";
+      break;
+    case "wisdom teeth removal":
+      value = "green";
+      break;
+    case "construction":
+      value = "orange";
+      break;
+    case "root canal":
+      value = "blue";
+      break;
+    case "scaling":
+      value = "red";
+      break;
+    default:
+      value = "default";
+      break;
+  }
+  return value;
+};

@@ -1,17 +1,20 @@
-import { useNavigation, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import HomeLayoutStyle from "../styles/HomeLayoutStyle";
 import { Menu, Loading } from "../pages";
+import { useSelector } from "react-redux";
 
 const HomeLayout = (props) => {
-  const navigation = useNavigation();
-  const isPageLoading = navigation.state === "loading";
+  const { isPageLoading } = useSelector((state) => {
+    return state.appointments;
+  });
   return (
     <HomeLayoutStyle>
       <section className="left-section">
         <Menu />
       </section>
       <section className="right-section">
-        {isPageLoading ? <Loading /> : <Outlet />}
+        {isPageLoading ? <Loading /> : null}
+        <Outlet />
       </section>
     </HomeLayoutStyle>
   );

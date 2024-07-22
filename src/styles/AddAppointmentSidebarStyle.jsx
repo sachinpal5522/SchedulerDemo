@@ -34,7 +34,8 @@ export default styled.section`
       grid-template-columns: 20rem;
       grid-row-gap: 1rem;
 
-      input {
+      input,
+      select {
         border: 1px solid #ddd;
         padding: 0.5rem;
         border-radius: 0.2rem;

@@ -5,28 +5,23 @@ import { useSelector, useDispatch } from "react-redux";
 import FullCalenderStyle from "../styles/FullCalenderStyle";
 import CalenderHeader from "../components/CalenderHeader";
 import AddAppointmetSidebar from "../components/AddAppointmetSidebar";
-import { useLoaderData } from "react-router-dom";
+import { getAppointments } from "../features/appointment/apointmentSlice";
 import {
   AppointmentUpdated,
   deleteAppointment,
 } from "../features/appointment/apointmentSlice";
 import EventContent from "../components/EventContent";
-import { customFetch } from "../utils";
-
-const url = "/appointments";
-export const Loader = async () => {
-  try {
-    const data = await customFetch(url);
-    return { appointments: data };
-  } catch (ex) {
-    alert("unable to getch data from server");
-    return { appointments: [] };
-  }
-};
+import { useEffect } from "react";
 
 const Calender = () => {
-  const { appointments } = useLoaderData();
+  const { schedules } = useSelector((state) => {
+    return state.appointments;
+  });
   const dispatch = useDispatch();
+
+  useEffect((state) => {
+    dispatch(getAppointments());
+  }, []);
 
   const appointmentChangeEvent = (changeInfo) => {
     const updatedEvent = changeInfo.event.toJSON();
@@ -45,7 +40,7 @@ const Calender = () => {
     height: "100%",
     plugins: [timeGridPlugin, interactionPlugin],
     initialView: "timeGridWeek",
-    events: appointments,
+    events: schedules,
     slotDuration: "00:20:00",
     slotLabelFormat: {
       hour: "numeric",

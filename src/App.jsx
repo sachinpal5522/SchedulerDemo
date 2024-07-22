@@ -1,8 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Calender, Summery, HomeLayout, Error, Welcome } from "./pages";
 
-import { Loader as CalenderLoader } from "./pages/Calender";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,7 +14,6 @@ const router = createBrowserRouter([
       {
         path: "calender",
         element: <Calender />,
-        loader: CalenderLoader,
       },
       {
         index: true,

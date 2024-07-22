@@ -6,6 +6,16 @@ import {
   addAppointment,
 } from "../features/appointment/apointmentSlice";
 
+const getMinDate = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
 const AddAppointmetSidebar = () => {
   const dispatch = useDispatch();
   const { addNewSidebarOpen, addAppointmentLoader } = useSelector(
@@ -43,8 +53,17 @@ const AddAppointmetSidebar = () => {
             <h1>Add Appointment</h1>
             <form onSubmit={handleSubmit}>
               <input type="text" placeholder="Full Name" name="fullname" />
-              <input type="text" placeholder="Purpose" name="procedure" />
-              <input type="datetime-local" name="datetime" />
+              <select name="procedure">
+                <option value="">Please Select Procedure</option>
+                <option value="bleaching">Bleaching</option>
+                <option value="wisdom teeth removal">
+                  Wisdom Teeth Removal
+                </option>
+                <option value="construction">Construction</option>
+                <option value="root canal">Root Canal</option>
+                <option value="scaling">Scaling</option>
+              </select>
+              <input type="datetime-local" min={getMinDate()} name="datetime" />
               <div>
                 <input type="checkbox" name="ismember" />
                 <label>Is Member</label>
