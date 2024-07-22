@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://schedulertaskserver.netlify.app";
 
 export const customFetch = async (url) => {
   let response = await fetch(`${baseUrl}${url}`);
