@@ -1,4 +1,4 @@
-const baseUrl = "https://schedulertaskserver.netlify.app";
+const baseUrl = "https://schedulerserver.onrender.com";
 
 export const customFetch = async (url) => {
   let response = await fetch(`${baseUrl}${url}`);
